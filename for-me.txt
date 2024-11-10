@@ -1,0 +1,121 @@
+ממשק העלאת קבצים עם ריאקט ואקספרס :
+-------------------------------------------------
+
+
+לינק לסרטון :
+--------------
+https://youtu.be/b6Oe2puTdMQ?si=idXKBNyWW5Su3-QY
+
+
+לינק לפלייליסט :
+----------------------
+https://www.youtube.com/watch?v=b6Oe2puTdMQ&list=PLillGF-RfqbY3c2r0htQyVbDJJoBFE6Rb&index=7
+
+
+התקנת פקג גייסון ותלויות :
+------------------------------
+
+ npm init -y 
+
+npm i express express-fileupload
+
+התקנת תלויות לסביבת פיתוח :
+---------------------------------------
+npm i -D nodemon concurrently
+
+nodemon - שהשרת יתעדכן כל פעם מחדש 
+concurrently- יאפשר לנו להריץ סרבר של ריאקט ואקספרס בו בזמן .
+
+
+רשימת סקריפטים בפקג גייסון :
+--------------------------------
+
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+
+  form chat GPT :
+  --------------
+  Explanation:
+start:
+
+"start": "node server.js"
+--------------------------
+This command starts the server by running server.js with Node.js.
+Running npm start will execute this command, which is typically used to start the server in a production environment.
+server:
+
+"server": "nodemon server.js"
+---------------------------------
+This command starts the server with nodemon, which is a tool that automatically restarts the server whenever it detects changes in the source files.
+You can run this command with npm run server, and it’s usually used for development so you don’t have to manually restart the server after every change.
+client:
+
+"client": "npm start --prefix client"
+-----------------------------------
+This command starts the client-side React application.
+--prefix client tells npm to look in the client directory (where the React app is located) and run the start script there.
+You can use this command with npm run client, and it will start the development server for the React app.
+dev:
+
+"dev": "concurrently \"npm run server\" \"npm run client\""
+----------------------------------------------------------------
+This command uses concurrently to run both the server and client scripts at the same time.
+concurrently is a tool that allows you to run multiple commands concurrently in the same terminal window.
+Running npm run dev will start both the backend (Node server) and frontend (React app) simultaneously. This is very convenient for development, as you don’t have to start each service separately.
+
+
+Summary of Usage:
+------------------
+npm start: Starts the Node.js server (used for production).
+npm run server: Starts the Node.js server with nodemon (useful for development, as it restarts on file changes).
+npm run client: Starts the React frontend.
+npm run dev: Starts both the backend server and frontend client at the same time in development mode.
+
+
+תלויות לריאקט :
+--------------
+
+npm i axios 
+
+
+באגים :
+--------
+הראה שגיאה 404 בעת שימוש בראוט מקוצר 
+הפרוקסי לא עבד [ראוט בקלינט ]
+
+const res = await axios.post('http://localhost:5000/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        });
+
+השמשתי בראוט המלא - והראה שגיאת -- CORS 
+חוסר תיאום בין קלינט לסרבר 
+[קלינט-- :3000 || סרבר -- :5000]
+
+התקנתי מודול -- cors 
+
+npm i cors 
+
+ואתחלתי אותו באקספרס 
+
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const cors = require('cors');  // Import cors
+
+// init express
+const app = express();
+
+// Use CORS middleware
+app.use(cors({
+    origin: 'http://localhost:3000'
+})); // Allow all origins
+
+
+
+********************
+עצרתי בדקה 35
